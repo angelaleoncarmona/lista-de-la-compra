@@ -33,6 +33,7 @@
     <main id="app">
         <section class="todo container">
             <h1 class="text-center">Lista de la Compra</h1>
+            <input @keypress.enter="anyadirProductoDesdeWeb(productoAnyadido)" v-model="productoAnyadido" type="text" >
             <ul v-if="productos.length > 0" class="menu">
                 <!-- menu item with form control -->
                 <li v-for="producto in productos" class="menu-item">

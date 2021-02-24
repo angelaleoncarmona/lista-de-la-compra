@@ -4,13 +4,15 @@ const URL_API = 'https://api.airtable.com/v0/appluKgCfgGUB5TbY/Productos?&view=G
 const AUTHORIZATION = 'Bearer keyOzTSqIJ6LUp99l';
 const URL_API_BORRAR = 'https://api.airtable.com/v0/appluKgCfgGUB5TbY/Productos?records[]=';
 const URL_API_ACTUALIZAR = 'https://api.airtable.com/v0/appluKgCfgGUB5TbY/Productos';
+const URL_API_ANYADIR = 'https://api.airtable.com/v0/appluKgCfgGUB5TbY/Productos';
 
 
 new Vue({
     el: '#app',
     data: {
         productos: [],
-        productoTextoActualizar: ''
+        productoTextoActualizar: '',
+        productoAnyadido: ''
     },
     mounted: function () {
         this.obtenerProductos();
@@ -88,6 +90,30 @@ new Vue({
                 }
             });
         },
+        // añadimos en AIRTABLE
+        anyadirProductoDesdeWeb: function(nuevoElemento) {
+            fetch(URL_API_ANYADIR, {
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization' : AUTHORIZATION
+                },
+                method: 'POST',
+                body: JSON.stringify({
+                    "records": [
+                        {
+                            "fields": {
+                                "Nombre": nuevoElemento,
+                                "Comprado": false
+                            }
+                        }
+                    ]
+                })
+            })
+            // Añadimos al html
+             if(this.productoAnyadido !== '') {
+                 this.productos.push(this.productoAnyadido);
+             }
+        }
 
     }
 })
