@@ -33,16 +33,17 @@
     <main id="app">
         <section class="todo container">
             <h1 class="text-center">Lista de la Compra</h1>
-            <input @keypress.enter="anyadirProductoDesdeWeb(productoAnyadido)" v-model="productoAnyadido" type="text" >
+            <input @keypress.enter="anyadirProductoDesdeWeb" v-model="productoAnyadido" type="text" >
             <ul v-if="productos.length > 0" class="menu">
                 <!-- menu item with form control -->
                 <li v-for="producto in productos" class="menu-item">
-                    <label class="form-checkbox">
+                    <label v-if="producto.id !== productoEditar" class="form-checkbox">
                         <input @click="actualizarAdquiridoEnAPI(producto.id, !producto.fields.Comprado)" type="checkbox" :checked="producto.fields.Comprado">
-                        <i class="form-icon"></i> {{ producto.fields.Nombre }}
+                        <i class="form-icon"></i>
+                        <span @click="abrirEditar(producto.id, producto.fields.Nombre)"> {{ producto.fields.Nombre }}</span>
                         <button @click="borrarProducto(producto.id)" class="btn btn-error">X</button>
                     </label>
-                    <div>
+                    <div v-else>
                         <input @keypress.enter="actualizarProductoEnAPI(producto.id, productoTextoActualizar)" v-model="productoTextoActualizar" type="text" >
                     </div>
                 </li>

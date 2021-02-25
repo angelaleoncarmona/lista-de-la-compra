@@ -12,7 +12,8 @@ new Vue({
     data: {
         productos: [],
         productoTextoActualizar: '',
-        productoAnyadido: ''
+        productoAnyadido: '',
+        productoEditar: false
     },
     mounted: function () {
         this.obtenerProductos();
@@ -43,6 +44,9 @@ new Vue({
             this.productos = this.productos.filter(producto => producto.id !== id)
         },
         actualizarProductoEnAPI: function(id, nuevoTexto) {
+            // cerrar editor
+            this.productoEditar = false
+            //actualizar producto
             fetch(URL_API_ACTUALIZAR, {
                 headers: {
                     'Content-type': 'application/json',
@@ -60,6 +64,7 @@ new Vue({
                     ]
                 })
             })
+                .then(() => this.obtenerProductos())
         },
         actualizarAdquiridoEnAPI: function(id, checked) {
             fetch(URL_API_ACTUALIZAR, {
@@ -91,7 +96,7 @@ new Vue({
             });
         },
         // añadimos en AIRTABLE
-        anyadirProductoDesdeWeb: function(nuevoElemento) {
+        anyadirProductoDesdeWeb: function() {
             fetch(URL_API_ANYADIR, {
                 headers: {
                     'Content-type': 'application/json',
@@ -102,7 +107,7 @@ new Vue({
                     "records": [
                         {
                             "fields": {
-                                "Nombre": nuevoElemento,
+                                "Nombre": this.productoAnyadido,
                                 "Comprado": false
                             }
                         }
@@ -110,9 +115,13 @@ new Vue({
                 })
             })
             // Añadimos al html
-             if(this.productoAnyadido !== '') {
-                 this.productos.push(this.productoAnyadido);
-             }
+                .then(() => this.productoAnyadido = '')
+                .then(() => this.obtenerProductos())
+
+        },
+        abrirEditar: function (id, nombre) {
+            this.productoEditar = id;
+            this.productoTextoActualizar = nombre;
         }
 
     }
