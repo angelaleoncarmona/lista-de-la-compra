@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file:///Volumes/Lecang/MFE/EJERCICIOS/16-airtable/.idea/16-airtable.iml" filepath="/Volumes/Lecang/MFE/EJERCICIOS/16-airtable/.idea/16-airtable.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../blog/.idea/blog.iml" filepath="$PROJECT_DIR$/../blog/.idea/blog.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/lista-de-la-compra.iml" filepath="$PROJECT_DIR$/.idea/lista-de-la-compra.iml" />
     </modules>
   </component>
